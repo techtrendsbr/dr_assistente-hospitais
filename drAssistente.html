@@ -1,0 +1,446 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dr. Assistente Hospitais - Reduza riscos jurídicos com prontuários transcritos</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;700;800&display=swap" rel="stylesheet">
+
+  <style>
+    /* =========================================
+       VARIÁVEIS DE MARCA (ROXO CORPORATIVO)
+       ========================================= */
+    :root {
+      --primary: #8257e5; 
+      --primary-dark: #5b3fa3;
+      --primary-soft: #f0edff;
+      
+      --text-main: #111827;
+      --text-light: #6b7280;
+      
+      --bg-white: #ffffff;
+      --bg-off: #f9fafb;
+      
+      --success: #059669; /* Verde financeiro */
+      --danger: #dc2626;  /* Vermelho prejuízo */
+    }
+
+    /* =========================================
+       BASE & RESET
+       ========================================= */
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    
+    body {
+      font-family: 'Inter', sans-serif;
+      color: var(--text-main);
+      background: var(--bg-white);
+      line-height: 1.5;
+    }
+    
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 24px;
+    }
+
+    a { text-decoration: none; transition: 0.2s; }
+    
+    /* =========================================
+       UI ELEMENTS
+       ========================================= */
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 14px 28px;
+      font-weight: 600;
+      border-radius: 6px;
+      font-size: 15px;
+      cursor: pointer;
+    }
+    
+    .btn-primary {
+      background: var(--primary);
+      color: #fff;
+      box-shadow: 0 4px 12px rgba(130, 87, 229, 0.25);
+    }
+    
+    .btn-primary:hover {
+      background: var(--primary-dark);
+      transform: translateY(-1px);
+    }
+    
+    .btn-ghost {
+      color: var(--text-main);
+      background: #f3f4f6;
+    }
+    
+    .btn-ghost:hover { background: #e5e7eb; }
+
+    .badge {
+      display: inline-block;
+      padding: 4px 12px;
+      border-radius: 100px;
+      font-size: 12px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      margin-bottom: 16px;
+    }
+    
+    .badge-purple {
+      background: var(--primary-soft);
+      color: var(--primary);
+    }
+
+    /* =========================================
+       HEADER
+       ========================================= */
+    header {
+      border-bottom: 1px solid #e5e7eb;
+      padding: 16px 0;
+      position: sticky;
+      top: 0;
+      background: rgba(255,255,255,0.95);
+      backdrop-filter: blur(5px);
+      z-index: 100;
+    }
+    
+    .nav-wrapper {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    
+    .logo {
+      font-weight: 800;
+      font-size: 20px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    
+    .logo-badge {
+      font-size: 10px;
+      background: #000;
+      color: #fff;
+      padding: 2px 6px;
+      border-radius: 4px;
+      text-transform: uppercase;
+    }
+
+    /* =========================================
+       HERO (B2B FOCUS)
+       ========================================= */
+    .hero {
+      padding: 100px 0;
+      background: radial-gradient(circle at top right, #f5f3ff 0%, #fff 50%);
+    }
+    
+    .hero-content {
+      max-width: 800px;
+      margin: 0 auto;
+      text-align: center;
+    }
+    
+    h1 {
+      font-size: 48px;
+      font-weight: 800;
+      line-height: 1.1;
+      letter-spacing: -1px;
+      margin-bottom: 24px;
+      color: #111827;
+    }
+    
+    .hero p {
+      font-size: 20px;
+      color: var(--text-light);
+      margin-bottom: 40px;
+      line-height: 1.6;
+    }
+    
+    .hero-stats {
+      display: flex;
+      justify-content: center;
+      gap: 40px;
+      margin-top: 60px;
+      border-top: 1px solid #e5e7eb;
+      padding-top: 40px;
+    }
+    
+    .stat-item strong {
+      display: block;
+      font-size: 32px;
+      font-weight: 800;
+      color: var(--primary);
+    }
+    
+    .stat-item span {
+      font-size: 14px;
+      color: var(--text-light);
+      text-transform: uppercase;
+      font-weight: 600;
+    }
+
+    /* =========================================
+       PAIN POINTS (GLOSAS & RISCO)
+       ========================================= */
+    .pain-section {
+      padding: 80px 0;
+      background: #111827; /* Fundo escuro para contraste corporativo */
+      color: #fff;
+    }
+    
+    .pain-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 60px;
+      align-items: center;
+    }
+    
+    .chart-mockup {
+      background: rgba(255,255,255,0.05);
+      border: 1px solid rgba(255,255,255,0.1);
+      border-radius: 12px;
+      padding: 30px;
+    }
+
+    .pain-list li {
+      margin-bottom: 20px;
+      display: flex;
+      gap: 15px;
+      align-items: flex-start;
+    }
+    
+    .pain-icon {
+      background: rgba(220, 38, 38, 0.2);
+      color: #f87171;
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+
+    /* =========================================
+       SOLUTION (AUDITORIA PREVIA)
+       ========================================= */
+    .solution-section {
+      padding: 100px 0;
+      background: var(--bg-off);
+    }
+    
+    .card-row {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 24px;
+      margin-top: 50px;
+    }
+    
+    .feature-card {
+      background: #fff;
+      padding: 32px;
+      border-radius: 12px;
+      border: 1px solid #e5e7eb;
+      transition: 0.3s;
+    }
+    
+    .feature-card:hover {
+      border-color: var(--primary);
+      box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+    }
+    
+    .f-icon {
+      width: 48px;
+      height: 48px;
+      background: var(--primary-soft);
+      color: var(--primary);
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 20px;
+      font-size: 20px;
+    }
+
+    /* =========================================
+       ROI CALCULATOR / CTA
+       ========================================= */
+    .cta-enterprise {
+      background: linear-gradient(135deg, #8257e5 0%, #4c1d95 100%);
+      padding: 80px 0;
+      text-align: center;
+      color: #fff;
+    }
+    
+    .integration-logos {
+      display: flex;
+      justify-content: center;
+      gap: 30px;
+      margin-top: 40px;
+      opacity: 0.7;
+      font-size: 14px;
+      font-weight: 600;
+      letter-spacing: 1px;
+    }
+
+    /* Mobile */
+    @media(max-width: 768px) {
+      h1 { font-size: 36px; }
+      .hero-stats { flex-direction: column; gap: 20px; }
+      .pain-grid { grid-template-columns: 1fr; }
+      .card-row { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <div class="container nav-wrapper">
+      <div class="logo">
+
+        Dr. Assistente <span class="logo-badge">HOSPITAIS</span>
+      </div>
+      <a href="#demo" class="btn btn-primary" style="padding: 10px 20px; font-size: 14px;">Agendar</a>
+    </div>
+  </header>
+
+  <section class="hero">
+    <div class="container hero-content">
+      <span class="badge badge-purple">Inteligência por Voz para Hospitais</span>
+      <h1>Gestor de hospital: </br>Transforme a voz de médicos em <span style="color:var(--primary)">prontuários sem riscos jurídicos</span></h1>
+      <p>O Dr. Assistente não é apenas transcrição. É uma camada de inteligência que padroniza prontuários para eliminar erros de documentação na origem.</p>
+      
+      <div style="display: flex; gap: 16px; justify-content: center;">
+	          <a href="#" class="btn btn-ghost">Ver Demo</a>
+        <a href="#demo" class="btn btn-primary">Agendar com Vendas</a>
+
+      </div>
+
+      <div class="hero-stats">
+        <div class="stat-item">
+          <strong>-35%</strong>
+          <span>Tempo de Tela do Médico</span>
+        </div>
+        <div class="stat-item">
+          <strong>+18%</strong>
+          <span>Recuperação de Receita</span>
+        </div>
+        <div class="stat-item">
+          <strong>Zero</strong>
+          <span>Backlog de Prontuários</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="pain-section">
+    <div class="container pain-grid">
+      <div>
+        <h2 style="font-size: 32px; font-weight: 700; margin-bottom: 24px;">O <u>Prontuário Pobre</u> é o maior vazamento de receita do seu hospital.</h2>
+        <p style="color: #9ca3af; margin-bottom: 30px;">
+          Seus médicos odeiam o sistema de gestão (EMR). O resultado? Anotações apressadas, incompletas e cheias de "copia e cola". Isso gera um efeito cascata devastador.
+        </p>
+        
+        <ul class="pain-list">
+          <li>
+            <div class="pain-icon">📉</div>
+            <div>
+              <strong>Glosas por falta de justificativa</strong>
+              <div style="font-size: 14px; color: #9ca3af;">O convênio nega o pagamento porque o procedimento não foi devidamente embasado no texto clínico.</div>
+            </div>
+          </li>
+          <li>
+            <div class="pain-icon">⚖️</div>
+            <div>
+              <strong>Vulnerabilidade Jurídica</strong>
+              <div style="font-size: 14px; color: #9ca3af;">Em caso de processo, prontuários rasos deixam o hospital sem defesa técnica.</div>
+            </div>
+          </li>
+          <li>
+            <div class="pain-icon">⏳</div>
+            <div>
+              <strong>Gargalo no Giro de Leito</strong>
+              <div style="font-size: 14px; color: #9ca3af;">Médicos gastam 2h por turno digitando. Isso são 2h a menos atendendo altas e admissões.</div>
+            </div>
+          </li>
+        </ul>
+      </div>
+
+      <div class="chart-mockup">
+        <div style="display:flex; justify-content:space-between; margin-bottom:20px; border-bottom:1px solid rgba(255,255,255,0.1); padding-bottom:10px;">
+          <span style="font-size:12px; text-transform:uppercase; color:#9ca3af;">Auditoria</span>
+          <span style="color:var(--success); font-size:12px;">● Sistema Ativo</span>
+        </div>
+        
+        <div style="background:rgba(255,255,255,0.1); padding:15px; border-radius:8px; margin-bottom:15px;">
+           <div style="color:#f87171; font-weight:700; font-size:13px; margin-bottom:5px;">⚠️ INCONSISTÊNCIA</div>
+           <p style="font-size:13px; color:#d1d5db;">Dr. Ricardo solicitou TC de Crânio, mas não descreveu trauma ou sinal focal na anamnese.</p>
+           <div style="margin-top:10px; font-size:11px; color:#9ca3af;">Ação da IA: Solicitou complemento ao médico antes do fechamento.</div>
+        </div>
+
+        <div style="background:rgba(255,255,255,0.1); padding:15px; border-radius:8px;margin-bottom:15px">
+           <div style="color:var(--success); font-weight:700; font-size:13px; margin-bottom:5px;">✅ CONFORMIDADE SEGURA</div>
+           <p style="font-size:13px; color:#d1d5db;">Protocolo de Sepse preenchido integralmente. CID e TUSS validados.</p>
+        </div>
+		<div style="background:rgba(255,255,255,0.1); padding:15px; border-radius:8px; margin-bottom:15px;">
+           <div style="color:#f87171; font-weight:700; font-size:13px; margin-bottom:5px;">⚠️ ALERTA DE MELHORIA</div>
+           <p style="font-size:13px; color:#d1d5db;">Dr. Mendes atendeu paciente sem abordar histórico anterior.</p>
+           <div style="margin-top:10px; font-size:11px; color:#9ca3af;">Ação da IA: Seguir sequência de perguntas definida pela gestão do hospital.</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="solution-section">
+    <div class="container">
+      <div style="text-align: center; max-width: 700px; margin: 0 auto;">
+        <h2 style="font-size: 32px; font-weight: 800; color: #111827;">Deixe seus médicos falarem.<br>Nós garantimos a conformidade.</h2>
+        <p style="color: var(--text-light); margin-top: 16px;">O Dr. Assistente se integra ao fluxo de trabalho para transformar conversas em dados estruturados, auditáveis e faturáveis.</p>
+      </div>
+
+      <div class="card-row">
+        <div class="feature-card">
+          <div class="f-icon">🛡️</div>
+          <h3 style="font-weight: 700; font-size: 18px; margin-bottom: 10px;">Blindagem de Receita</h3>
+          <p style="font-size: 14px; color: var(--text-light);">A IA garante que cada procedimento solicitado tenha a justificativa clínica correspondente no texto, reduzindo o índice de glosas técnicas.</p>
+        </div>
+
+        <div class="feature-card">
+          <div class="f-icon">🚀</div>
+          <h3 style="font-weight: 700; font-size: 18px; margin-bottom: 10px;">Eficiência Operacional</h3>
+          <p style="font-size: 14px; color: var(--text-light);">Retire o computador da frente do médico. Reduza o tempo de preenchimento de prontuário em 70% e aumente a capacidade de atendimento.</p>
+        </div>
+
+        <div class="feature-card">
+          <div class="f-icon">🔒</div>
+          <h3 style="font-weight: 700; font-size: 18px; margin-bottom: 10px;">Segurança & Compliance</h3>
+          <p style="font-size: 14px; color: var(--text-light);">Ambiente 100% seguro, criptografado e em conformidade com LGPD. Seus dados não treinam modelos públicos.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="cta-enterprise" id="demo">
+    <div class="container">
+      <h2 style="font-size: 36px; font-weight: 800; margin-bottom: 20px;">Modernize seu Corpo Clínico. Proteja seu Caixa.</h2>
+      <p style="max-width: 600px; margin: 0 auto 40px auto; opacity: 0.9;">Agende uma demonstração executiva e veja como implementar o Dr. Assistente em sua unidade em menos de 7 dias.</p>
+      
+      <a href="#" class="btn" style="background: #fff; color: var(--primary); padding: 16px 40px;">Falar com Vendas</a>
+      
+      <div class="integration-logos">
+        <span>INTEGRAÇÃO VIA API</span>
+      </div>
+    </div>
+  </section>
+
+  <footer style="background: #f9fafb; padding: 40px 0; border-top: 1px solid #e5e7eb; text-align: center; color: var(--text-light); font-size: 14px;">
+    <div class="container">
+      <p>&copy; 2025 Dr. Assistente.</p>
+    </div>
+  </footer>
+
+</body>
+</html>
